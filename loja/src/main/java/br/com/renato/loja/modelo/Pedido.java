@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +22,8 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
 	
 	private LocalDate data = LocalDate.now();
@@ -35,8 +39,14 @@ public class Pedido {
 		
 		É uma boa pratica sempre inicializar
 		a lista para evitar mais if's no codigo
+		
+		Utilizamos o cascade type ALL, para que quando
+		um pedido for salvo, alterado ou excluido do
+		banco, o mesmo se replique na classe ItemPedido,
+		dessa forma garantimos que a consistencia das
+		informações.
 	*/
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	// JPA ONLY
