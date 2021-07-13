@@ -26,12 +26,19 @@ public class ItemPedido {
 	private Produto produto;
 
 	public ItemPedido() {
-		super();
 	}
+	
+	/*
+		Aqui no caso como já estamos passando o produto para
+		a lista, podemos aproveitar e pegar o preco dele sem
+		a necessidade de passar o preco como paramentro do
+		construtor.
+	*/
 
 	public ItemPedido(int quantidade, Pedido pedido, Produto produto) {
 		this.quantidade = quantidade;
 		this.pedido = pedido;
+		this.precoUnitario = produto.getPreco();
 		this.produto = produto;
 	}
 
@@ -39,20 +46,40 @@ public class ItemPedido {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public BigDecimal getPrecoUnitario() {
 		return precoUnitario;
+	}
+
+	public void setPrecoUnitario(BigDecimal precoUnitario) {
+		this.precoUnitario = precoUnitario;
 	}
 
 	public int getQuantidade() {
 		return quantidade;
 	}
 
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	public Pedido getPedido() {
 		return pedido;
 	}
 
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 	public Produto getProduto() {
 		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 }

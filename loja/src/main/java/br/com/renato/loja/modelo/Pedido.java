@@ -2,6 +2,7 @@ package br.com.renato.loja.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,13 +21,23 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private BigDecimal valorTotal;
+	
 	private LocalDate data = LocalDate.now();
 
 	@ManyToOne
 	private Cliente cliente;
 	
-	@OneToMany
-	private List<ItemPedido> itens;
+	/*
+		Sempre que trabalhamos com um relacionamento
+		bidirecional, precisamos colocar o mappedBy
+		apontando para atributo em questao na outra 
+		classe do relacionamento.
+		
+		É uma boa pratica sempre inicializar
+		a lista para evitar mais if's no codigo
+	*/
+	@OneToMany(mappedBy = "pedido")
+	private List<ItemPedido> itens = new ArrayList<>();
 
 	// JPA ONLY
 	public Pedido() {
@@ -66,6 +77,18 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	/*
+		É considerado uma boa pratica criar um método utilitario que
+		tem como responsabilidade setar o item a lista de itensPedido e 
+		por ser um relacionamento bidirecional, fazer o mesmo do outro
+		lado como no exemplo abaixo.
+	*/
+	
+	public void adicionarItem(ItemPedido item) {
+		item.setPedido(this);
+		this.itens.add(item);
 	}
 
 }
