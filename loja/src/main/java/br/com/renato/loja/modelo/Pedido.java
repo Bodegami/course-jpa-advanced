@@ -24,7 +24,7 @@ public class Pedido {
 	private Long id;
 	
 	@Column(name = "valor_total")
-	private BigDecimal valorTotal;
+	private BigDecimal valorTotal = BigDecimal.ZERO;
 	
 	private LocalDate data = LocalDate.now();
 
@@ -38,7 +38,10 @@ public class Pedido {
 		classe do relacionamento.
 		
 		É uma boa pratica sempre inicializar
-		a lista para evitar mais if's no codigo
+		a lista para evitar mais if's no codigo.
+		
+		O cascade cria um efeito cascata nas operações 
+		realizadas em uma entidade.
 		
 		Utilizamos o cascade type ALL, para que quando
 		um pedido for salvo, alterado ou excluido do
@@ -99,6 +102,7 @@ public class Pedido {
 	public void adicionarItem(ItemPedido item) {
 		item.setPedido(this);
 		this.itens.add(item);
+		this.valorTotal = this.valorTotal.add(item.getValor());
 	}
 
 }
