@@ -15,6 +15,7 @@ import br.com.renato.loja.modelo.ItemPedido;
 import br.com.renato.loja.modelo.Pedido;
 import br.com.renato.loja.modelo.Produto;
 import br.com.renato.loja.util.JPAUtil;
+import br.com.renato.loja.vo.RelatorioDeVendasVO;
 
 public class CadastroDePedido {
 
@@ -53,12 +54,9 @@ public class CadastroDePedido {
 		BigDecimal totalVendido = pedidoDao.valorTotalVendido();
 		System.out.println("VALOR TOTAL: " + totalVendido);
 		
-		List<Object[]> relatorio = pedidoDao.relatorioDeVendas();
-		for (Object[] obj : relatorio) {
-			System.out.println(obj[0]);
-			System.out.println(obj[1]);
-			System.out.println(obj[2]);
-		}
+		List<RelatorioDeVendasVO> relatorio = pedidoDao.relatorioDeVendas();
+		relatorio.forEach(System.out::println);
+		
 	}
 	
 	private static void popularBancoDeDados() {

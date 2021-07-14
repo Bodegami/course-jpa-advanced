@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.renato.loja.modelo.Pedido;
+import br.com.renato.loja.vo.RelatorioDeVendasVO;
 
 public class PedidoDao {
 	
@@ -26,11 +27,18 @@ public class PedidoDao {
 				.getSingleResult();
 	}
 	
-	public List<Object[]> relatorioDeVendas() {
-		String jpql = "SELECT produto.nome, SUM(item.quantidade), MAX(pedido.data) "
+	/*
+		O SELECT new é um comando da JPA que permite a criacao da instancia 
+		de uma classe para retornar como objeto, ao inves de usar um array 
+		do tipo Object que represente varios tipos de elementos.
+	*/
+	
+	public List<RelatorioDeVendasVO> relatorioDeVendas() {
+		String jpql = "SELECT new br.com.renato.loja.vo.RelatorioDeVendasVO "
+				+ "(produto.nome, SUM(item.quantidade), MAX(pedido.data)) "
 				+ "FROM Pedido pedido JOIN pedido.itens item JOIN item.produto produto "
 				+ "GROUP BY produto.nome ORDER BY item.quantidade DESC";
-		return em.createQuery(jpql, Object[].class)
+		return em.createQuery(jpql, RelatorioDeVendasVO.class)
 				.getResultList();
 	}
 	
