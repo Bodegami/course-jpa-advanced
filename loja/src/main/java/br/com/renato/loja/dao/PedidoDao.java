@@ -31,6 +31,8 @@ public class PedidoDao {
 		O SELECT new é um comando da JPA que permite a criacao da instancia 
 		de uma classe para retornar como objeto, ao inves de usar um array 
 		do tipo Object que represente varios tipos de elementos.
+		Para isso a classe referenciada deve conter um construtor com
+		os parametros compativeis com os dados dada busca.
 	*/
 	
 	public List<RelatorioDeVendasVO> relatorioDeVendas() {

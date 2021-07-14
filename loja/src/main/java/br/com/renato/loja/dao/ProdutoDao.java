@@ -46,6 +46,7 @@ public class ProdutoDao {
 				.getResultList();
 	}
 	
+	/*
 	//JPQL utilizando o Position Parameters
 	public List<Produto> buscarPorNomeDaCategoria(String categoria) {
 		String jpql = "SELECT p FROM Produto p WHERE p.categoria.nome = ?1";
@@ -53,6 +54,14 @@ public class ProdutoDao {
 				.setParameter(1, categoria)
 				.getResultList();
 	}
+	*/
+	
+	//JPQL utilizando o Named Query
+		public List<Produto> buscarPorNomeDaCategoria(String nome) {
+			return em.createNamedQuery("Produto.produtosPorCategoria", Produto.class)
+					.setParameter("pNome", nome)
+					.getResultList();
+		}
 		
 
 	//JPQL retornando apenas um campo do produto da tabela
