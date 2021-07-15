@@ -44,6 +44,26 @@ public class PedidoDao {
 				.getResultList();
 	}
 	
+	/*
+		Quando temos um relacionamento que por padrao esta setado 
+		como LAZY e precisamos carregar essa informacao do relacionamento,
+		utilizamos uma estrategia conhecida como Query Planejada.
+		Basicamente criamos a nossa query padrao e utilizamos as tags
+		JOIN FETCH apontando para qual informacao do relaciomento a 
+		JPA deve trazer junto com a busca principal. 
+		Repare que no metodo abaixo poderiamos apenas usar o find do 
+		EntityManager, porem como precisamos da informacao do cliente
+		que esta atrelado ao relacionamento, usei a abordagem da 
+		Query Planejada. Dessa forma não precisei mudar a propriedade
+		do relacionamento da classe para EAGER.
+	*/
+	
+	public Pedido buscarPedidoComCliente(Long id) {
+		return em.createQuery("SELECT p FROM Pedido p JOIN FETCH p.cliente WHERE p.id =:id", Pedido.class)
+				.setParameter("id", id)
+				.getSingleResult();
+	}
+	
 }
 	
 	
