@@ -110,6 +110,14 @@ public class ProdutoDao {
 		return query.getResultList();
 	}
 	
+	/*
+		A API de Criteria é uma alternativa mais elegante para consultas
+		dinamicas, porem ela é um pouco mais complexa para o entendimento
+		da equipe. Ela permite fazer a mesma consulta acima, escrevendo 
+		menos codigo e tb um pouco mais performatica. Lembrando que o 
+		exemplo abaixo é baseado no Criteria da JPA 2.0 .
+	
+	*/
 	
 	public List<Produto> buscarPorParametrosComCriteria(String nome, BigDecimal preco, LocalDate dataCadastro) {
 		
