@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import br.com.renato.loja.dao.CategoriaDao;
 import br.com.renato.loja.dao.ProdutoDao;
 import br.com.renato.loja.modelo.Categoria;
+import br.com.renato.loja.modelo.CategoriaId;
 import br.com.renato.loja.modelo.Produto;
 import br.com.renato.loja.util.JPAUtil;
 
@@ -47,6 +48,12 @@ public class CadastroDeProduto {
 		produtoDao.cadastrar(celular);
 		
 		em.getTransaction().commit();
+		
+		/*
+			Exemplo de busca de uma classe que utiliza a chave composta
+		*/
+		em.find(Categoria.class, new CategoriaId("CELULARES", "xpto"));
+		
 		em.close();
 	}
 
